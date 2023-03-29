@@ -16,4 +16,9 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_logo_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Diplom</item>
+    </style>
 </resources>
