@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.example.diplom.ui.home.HomeFragment"
+        android:label="@string/title_news"
+        tools:layout="@layout/news_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="com.example.diplom.ui.schedule.ScheduleFragment"
+        android:label="@string/title_schedule"
+        tools:layout="@layout/schedule_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_attendance"
+        android:name="com.example.diplom.ui.attendance.AttendanceFragment"
+        android:label="@string/title_attendance"
+        tools:layout="@layout/attendance_fragment" />
+</navigation>
