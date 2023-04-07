@@ -1,4 +1,7 @@
 package com.example.diplom.ui.schedule
 
-class ScheduleFragment {
+import androidx.fragment.app.Fragment
+import com.example.diplom.R
+
+class ScheduleFragment : Fragment(R.layout.schedule_fragment){
 }

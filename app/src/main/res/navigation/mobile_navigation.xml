@@ -3,13 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_login">
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.example.diplom.ui.login.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_news"
+            app:destination="@id/navigation_news"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_in_left"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_news"
-        android:name="com.example.diplom.ui.home.HomeFragment"
+        android:name="com.example.diplom.ui.news.NewsFragment"
         android:label="@string/title_news"
-        tools:layout="@layout/news_fragment" />
+        tools:layout="@layout/news_fragment" >
+        <action
+            android:id="@+id/action_navigation_news_to_detailed_news"
+            app:destination="@id/detailed_news" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailed_news"
+        android:name="com.example.diplom.ui.news.detailednews.DetailedNewsFragment"
+        android:label="@string/title_news"
+        tools:layout="@layout/detailed_news_fragment">
+        <action
+            android:id="@+id/action_detailed_news_self"
+            app:destination="@id/detailed_news"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popUpTo="@id/navigation_news" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_schedule"
