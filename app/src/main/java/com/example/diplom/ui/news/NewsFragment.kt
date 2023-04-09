@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplom.R
 import com.example.diplom.databinding.NewsFragmentBinding
 import com.example.diplom.domain.entity.News
+import com.google.android.material.snackbar.Snackbar
 
 class NewsFragment : Fragment(R.layout.news_fragment) {
 
@@ -21,7 +21,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         News("Hi", "I'm artem", "12.04.2023", "Artem"),
         News("Hi", "I'm sasha", "01.04.2023", "Sasha")
     )
-    private val adapterNews: NewsCardAdapter = NewsCardAdapter(dataList,this::click)
+    private val adapterNews: NewsCardAdapter = NewsCardAdapter(dataList, this::onItemClick)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = NewsFragmentBinding.bind(view)
@@ -42,18 +42,17 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
                 adapter = adapterNews
                 layoutManager = LinearLayoutManager(requireContext())
             }
-            with(swipeNews){
+            with(swipeNews) {
                 setOnRefreshListener {
-
-                    isRefreshing=false
+                    isRefreshing = false
                 }
             }
         }
     }
-    private fun click(position:Int){
+
+    private fun onItemClick(position: Int) {
         val bundle = Bundle()
         bundle.putInt("position", position)
-        Toast.makeText(context, "U clicked on news", Toast.LENGTH_SHORT).show()
         findNavController().navigate(
             R.id.action_navigation_news_to_detailed_news,
             bundle

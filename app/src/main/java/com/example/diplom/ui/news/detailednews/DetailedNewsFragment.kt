@@ -10,7 +10,7 @@ import com.example.diplom.domain.entity.News
 
 class DetailedNewsFragment : Fragment(R.layout.detailed_news_fragment) {
 
-    private lateinit var binding : DetailedNewsFragmentBinding
+    private lateinit var binding: DetailedNewsFragmentBinding
     private var dataList: MutableList<News> = mutableListOf(
         News("Hi", "I'm egor", "07.04.2023", "Egor"),
         News("Hi", "I'm nick", "03.04.2023", "Nick"),
@@ -25,7 +25,7 @@ class DetailedNewsFragment : Fragment(R.layout.detailed_news_fragment) {
         bindui(dataList[newsIndex])
     }
 
-    private fun bindui(news:News){
+    private fun bindui(news: News) {
         with(binding) {
             with(news) {
                 tvItemTitle.text = title

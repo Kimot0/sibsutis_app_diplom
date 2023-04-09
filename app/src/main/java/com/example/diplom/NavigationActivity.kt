@@ -26,7 +26,8 @@ class NavigationActivity : AppCompatActivity() {
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         onDestinationHideMenu()
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -35,7 +36,7 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.navigation_attendance
             )
         )
-        setupActionBarWithNavController(navController,appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
     }
 
@@ -61,7 +62,7 @@ class NavigationActivity : AppCompatActivity() {
                     }
                     is NewsFragment,
                     is ScheduleFragment,
-                    is AttendanceFragment-> {
+                    is AttendanceFragment -> {
                         hideAppBar()
                         showBottomNavigationMenu()
                     }
@@ -69,6 +70,7 @@ class NavigationActivity : AppCompatActivity() {
             }
         }, true)
     }
+
     private fun showBottomNavigationMenu() {
         binding.bottomNavView.visibility = View.VISIBLE
     }
