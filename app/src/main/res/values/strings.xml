@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">SibsutisApp</string>
     <string name="title_activity_navigation">navigation_activity</string>
-    <string name="title_news">News</string>
-    <string name="title_schedule">Schedule</string>
-    <string name="title_attendance">Attendance</string>
+    <string name="title_news">Новости</string>
+    <string name="title_schedule">Расписание</string>
+    <string name="title_attendance">Посещаемость</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
