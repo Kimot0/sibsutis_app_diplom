@@ -5,4 +5,11 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
+
+    <!--  Common padding  -->
+    <dimen name="common_padding_8">8dp</dimen>
+    <dimen name="common_padding_16">16dp</dimen>
+
+    <!--  Common margin  -->
+    <dimen name="common_margin_16">16dp</dimen>
 </resources>
