@@ -2,6 +2,8 @@ package com.example.diplom
 
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
@@ -22,6 +24,7 @@ class NavigationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         installSplashScreen()
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,7 +39,7 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.navigation_attendance
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
     }
 
