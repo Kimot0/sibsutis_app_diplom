@@ -7,7 +7,7 @@ class ScheduleViewModel : ViewModel(){
     val tabTitles = arrayOf(
         "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"
     )
-    val scheduleArray = listOf(
+    val scheduleArray916 = listOf(
         listOf(
             Lesson(
                 "08:00", "Агалаков А.А.", "432", "Практика","СТП2","both"
@@ -42,4 +42,26 @@ class ScheduleViewModel : ViewModel(){
         listOf(),
         listOf()
     )
+    val scheduleArray917 = listOf(
+        listOf(),
+        listOf(
+            Lesson(
+                "08:00", "Перцев И.В.", "432", "Практика","ПГИ","both"
+            ),
+            Lesson(
+                "09:50", "Перцев И.В.", "210", "Лекция","ПГИ","both"
+            ),
+            Lesson(
+                "11:40", "Дьячкова И.С.", "218", "Лекция","СБД","both"
+            ),
+            Lesson(
+                "13:45", "Дементьева К.И.", "631", "Практика","ТИ","both"
+            ),
+        ),
+        listOf(),
+        listOf(),
+        listOf(),
+        listOf()
+    )
+
 }

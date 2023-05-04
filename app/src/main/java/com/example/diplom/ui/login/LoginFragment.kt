@@ -4,21 +4,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.diplom.R
+import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.LoginFragmentBinding
+import com.example.diplom.domain.entity.Account
+import com.example.diplom.domain.entity.UserAuthRequest
+import com.example.diplom.domain.entity.UserAuthResult
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.scope.Scope
 
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
-    private var logs: MutableList<String> = mutableListOf(
-        "admin", "nmoniev@gmail.com", "egorbauer@yandex.ru"
-    )
-    private var passwords: MutableList<String> = mutableListOf(
-        "12345", "qwerty", "warthunderbaby"
-    )
-
     private lateinit var binding: LoginFragmentBinding
+    private val model: LoginViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -32,24 +34,25 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     private fun bindUi() {
         with(binding) {
             LoginButton.setOnClickListener() {
-                login()
+                lifecycleScope.launch { login() }
             }
         }
     }
 
-    private fun login() {
+    private suspend fun login() {
         with(binding) {
             val login = loginEditText.text.toString()
             val pass = passwordEditText.text.toString()
-            if (logs.contains(login) && passwords.contains(pass)) {
-                Toast.makeText(
-                    context,
-                    "Your login: $login \nyour password: $pass",
-                    Toast.LENGTH_SHORT
-                ).show()
-                findNavController().navigate(R.id.action_navigation_login_to_navigation_news)
-            } else {
-                Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show()
+            val user = UserAuthRequest(login, pass)
+            when(model.auth(user)) {
+                1 -> {
+                    InMemoryCache.user = Account(0,login,model.groupRes)
+                    Toast.makeText(context,"gj",Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.action_navigation_login_to_navigation_news)
+                }
+                0 -> {
+                    Toast.makeText(context, model.groupRes, Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
