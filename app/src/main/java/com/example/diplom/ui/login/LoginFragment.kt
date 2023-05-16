@@ -40,7 +40,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private fun login() {
         with(binding) {
-            val role = "TEACHER"
+            val role = "HEAD"
             val login = loginEditText.text.toString()
             val pass = passwordEditText.text.toString()
             if (logs.contains(login) && passwords.contains(pass)) {
@@ -56,6 +56,9 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                     }
                     "STUDENT" -> {
                         (requireActivity() as NavigationActivity).setupBottomNavigationBarForStudent()
+                    }
+                    "HEAD" -> {
+                        (requireActivity() as NavigationActivity).setupBottomNavigationBarForHead()
                     }
                 }
                 findNavController().navigate(R.id.action_navigation_login_to_navigation_news)
