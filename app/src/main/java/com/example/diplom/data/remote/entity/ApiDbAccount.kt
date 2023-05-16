@@ -8,7 +8,7 @@ import com.example.diplom.domain.entity.Account
 
 @Entity(
     tableName = "accounts",
-    indices = [Index("email",unique=true)]
+    indices = [Index("username",unique=true)]
 )
 
 data class ApiDbAccount(

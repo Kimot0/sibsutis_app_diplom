@@ -1,6 +1,6 @@
 package com.example.diplom.domain.entity
 
 data class UserAuthRequest(
-    val username:String,
+    val login:String,
     val password:String
 )

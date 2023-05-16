@@ -6,5 +6,7 @@ data class Lesson(
     val classroom: String,
     val typeOfLesson: String,
     val name: String,
-    val weeekType: String
+    val weekType: String,
+    val groupID: String?,
+    val weekDay:String,
 )

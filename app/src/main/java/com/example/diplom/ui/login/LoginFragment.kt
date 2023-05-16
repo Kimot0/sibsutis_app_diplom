@@ -10,6 +10,7 @@ import com.example.diplom.R
 import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.LoginFragmentBinding
 import com.example.diplom.domain.entity.Account
+import com.example.diplom.domain.entity.ScheduleRequest
 import com.example.diplom.domain.entity.UserAuthRequest
 import com.example.diplom.domain.entity.UserAuthResult
 import kotlinx.coroutines.launch
@@ -34,7 +35,10 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     private fun bindUi() {
         with(binding) {
             LoginButton.setOnClickListener() {
-                lifecycleScope.launch { login() }
+                it.isClickable = false
+                lifecycleScope.launch { login()
+                    it.isClickable = true}
+
             }
         }
     }
@@ -47,6 +51,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
             when(model.auth(user)) {
                 1 -> {
                     InMemoryCache.user = Account(0,login,model.groupRes)
+                    InMemoryCache.group = ScheduleRequest(model.groupRes)
                     Toast.makeText(context,"gj",Toast.LENGTH_LONG).show()
                     findNavController().navigate(R.id.action_navigation_login_to_navigation_news)
                 }

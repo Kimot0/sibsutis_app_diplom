@@ -26,7 +26,7 @@ class ScheduleTabRecyclerAdapter: RecyclerView.Adapter<ScheduleTabRecyclerAdapte
                     tvLessonName.text = name
                     tvLessonType.text = typeOfLesson
                     tvLessonTeacher.text = teacher
-                    tvLessonWeek.text = weeekType
+                    tvLessonWeek.text = weekType
                 }
             }
         }

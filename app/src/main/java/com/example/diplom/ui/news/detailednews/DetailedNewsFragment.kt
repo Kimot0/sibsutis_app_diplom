@@ -31,7 +31,7 @@ class DetailedNewsFragment : Fragment(R.layout.detailed_news_fragment) {
                 tvItemTitle.text = title
                 tvItemAuthor.text = author
                 tvItemDate.text = dateTime
-                tvItemDescription.text = description
+                tvItemDescription.text = content
             }
         }
     }

@@ -24,7 +24,7 @@ class NewsCardAdapter(
         fun bind(data: News) {
             with(binding) {
                 tvTitle.text = data.title
-                tvContent.text = data.description
+                tvContent.text = data.content
                 tvAuthor.text = data.author
                 tvDate.text = data.dateTime
                 root.setOnClickListener {

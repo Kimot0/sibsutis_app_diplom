@@ -28,13 +28,6 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         bindui()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
     private fun bindui() {
         with(binding) {
