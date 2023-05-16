@@ -10,7 +10,6 @@ import com.example.diplom.domain.entity.ScheduleRequest
 import com.example.diplom.domain.repo.IScheduleRepo
 
 class ScheduleRepo(private val source: SibsutisRemoteDataSource):IScheduleRepo {
-
     override suspend fun getSchedule(groupID: ScheduleRequest): Requests<List<Lesson>>{
         return when (val result = source.getSchedule(groupID)) {
             is Requests.Success -> {

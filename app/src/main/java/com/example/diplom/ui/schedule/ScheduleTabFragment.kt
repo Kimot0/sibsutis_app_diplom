@@ -39,10 +39,6 @@ class ScheduleTabFragment : Fragment(R.layout.schedule_tab_fragment) {
                         Log.println(Log.WARN,"Custom",it.toString())
                     }
                 }
-                /*if (model.resList[position].isEmpty()) {
-                    tvNoLesson.text = "Нет занятий"
-                }
-                adapter.setUpdatedData(model.resList[position])*/
                 if (InMemoryCache.groupSchedule[position].isEmpty()) {
                     tvNoLesson.text = "Нет занятий"
                 }

@@ -11,7 +11,8 @@ class NewsRepo(private val source: SibsutisRemoteDataSource):INewsRepo{
         return when (val result = source.getNews()) {
             is Requests.Success -> {
                 Requests.Success(
-                    result.data.map{it.toNews()}
+                    //result.data.map{it.toNews()}
+                result.data as List<News>
                 )
             }
             is Requests.Error -> {

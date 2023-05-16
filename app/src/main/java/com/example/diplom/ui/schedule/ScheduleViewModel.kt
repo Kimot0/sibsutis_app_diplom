@@ -40,27 +40,27 @@ class ScheduleViewModel(
         schedule.forEach {
             when (it.weekDay) {
                 "ПН" -> {
-                    mondayList.add(mondayList.lastIndex + 1, it)
+                    mondayList.add(it)
                 }
 
                 "ВТ" -> {
-                    tuesdayList.add(tuesdayList.lastIndex + 1, it)
+                    tuesdayList.add(it)
                 }
 
                 "СР" -> {
-                    wednesdayList.add(wednesdayList.lastIndex + 1, it)
+                    wednesdayList.add(it)
                 }
 
                 "ЧТ" -> {
-                    thursdayList.add(thursdayList.lastIndex + 1, it)
+                    thursdayList.add(it)
                 }
 
                 "ПТ" -> {
-                    fridayList.add(fridayList.lastIndex + 1, it)
+                    fridayList.add(it)
                 }
 
                 "СБ" -> {
-                    saturdayList.add(saturdayList.lastIndex + 1, it)
+                    saturdayList.add(it)
                 }
             }
         }
