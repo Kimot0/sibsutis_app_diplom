@@ -51,6 +51,11 @@ class NavigationActivity : AppCompatActivity() {
         val bottomBarMenu = binding.bottomNavView.menu
         bottomBarMenu.removeItem(R.id.navigation_attendance)
     }
+    fun setupBottomNavigationBarForHead() {
+        val bottomBarMenu = binding.bottomNavView.menu
+    }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
