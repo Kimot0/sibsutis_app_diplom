@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.diplom.NavigationActivity
 import com.example.diplom.R
 import com.example.diplom.databinding.LoginFragmentBinding
 
@@ -39,6 +40,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private fun login() {
         with(binding) {
+            val role = "TEACHER"
             val login = loginEditText.text.toString()
             val pass = passwordEditText.text.toString()
             if (logs.contains(login) && passwords.contains(pass)) {
@@ -47,6 +49,15 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                     "Your login: $login \nyour password: $pass",
                     Toast.LENGTH_SHORT
                 ).show()
+                // TODO: Получать данные с сервера
+                when (role) {
+                    "TEACHER" -> {
+                        (requireActivity() as NavigationActivity).setupBottomNavigationBarForTeacher()
+                    }
+                    "STUDENT" -> {
+                        (requireActivity() as NavigationActivity).setupBottomNavigationBarForStudent()
+                    }
+                }
                 findNavController().navigate(R.id.action_navigation_login_to_navigation_news)
             } else {
                 Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show()
