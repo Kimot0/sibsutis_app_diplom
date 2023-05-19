@@ -36,9 +36,10 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         with(binding) {
             LoginButton.setOnClickListener() {
                 it.isClickable = false
-                lifecycleScope.launch { login()
-                    it.isClickable = true}
-
+                lifecycleScope.launch {
+                    login()
+                    it.isClickable = true
+                }
             }
         }
     }

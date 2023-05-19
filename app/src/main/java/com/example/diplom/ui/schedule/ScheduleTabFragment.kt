@@ -32,13 +32,6 @@ class ScheduleTabFragment : Fragment(R.layout.schedule_tab_fragment) {
             rvScheduleTab.layoutManager = LinearLayoutManager(context)
             arguments?.takeIf { it.containsKey("position") }?.apply {
                 val position = getInt("position")
-                Log.println(Log.WARN, "Custom", position.toString())
-                Log.println(Log.WARN, "Custom", "capacity = "+InMemoryCache.groupSchedule.size.toString())
-                InMemoryCache.groupSchedule.forEach { it ->
-                    it.forEach { 
-                        Log.println(Log.WARN,"Custom",it.toString())
-                    }
-                }
                 if (InMemoryCache.groupSchedule[position].isEmpty()) {
                     tvNoLesson.text = "Нет занятий"
                 }

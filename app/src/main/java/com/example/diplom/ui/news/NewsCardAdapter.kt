@@ -3,18 +3,19 @@ package com.example.diplom.ui.news
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplom.R
+import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.ItemNewsBinding
 import com.example.diplom.domain.entity.News
 
 class NewsCardAdapter(
-    private var dataList: MutableList<News>,
     private val onItemClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<NewsCardAdapter.NewsViewHolder>() {
 
-    //private var dataList: MutableList<News> = mutableListOf()
+    private var dataList: MutableList<News> = InMemoryCache.news
 
     inner class NewsViewHolder(
         private val binding: ItemNewsBinding,
@@ -32,6 +33,10 @@ class NewsCardAdapter(
                 }
             }
         }
+    }
+
+    fun setUpdatedData(dataList: List<News>) {
+        this.dataList = dataList.toMutableList()
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {

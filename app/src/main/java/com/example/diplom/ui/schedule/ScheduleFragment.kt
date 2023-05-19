@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.diplom.R
 import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.ScheduleFragmentBinding
@@ -25,10 +27,14 @@ class ScheduleFragment : Fragment(R.layout.schedule_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding = ScheduleFragmentBinding.bind(view)
         adapterSch = ScheduleViewPagerAdapter(this)
-        lifecycleScope.launch {
-            model.getShedule(InMemoryCache.group)
-            model.sortSchedule(model.tempList.toMutableList())
-            bindui()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    model.getShedule(InMemoryCache.group)
+                    model.sortSchedule(model.tempList.toMutableList())
+                    bindui()
+                }
+            }
         }
     }
 

@@ -5,27 +5,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplom.R
+import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.NewsFragmentBinding
 import com.example.diplom.domain.entity.News
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsFragment : Fragment(R.layout.news_fragment) {
 
     private lateinit var binding: NewsFragmentBinding
-    private var dataList: MutableList<News> = mutableListOf(
-        News("Hi", "I'm egor", "07.04.2023", "Egor"),
-        News("Hi", "I'm nick", "03.04.2023", "Nick"),
-        News("Hi", "I'm artem", "12.04.2023", "Artem"),
-        News("Hi", "I'm sasha", "01.04.2023", "Sasha")
-    )
-    private val adapterNews: NewsCardAdapter = NewsCardAdapter(dataList, this::onItemClick)
+    private val adapterNews: NewsCardAdapter = NewsCardAdapter(this::onItemClick)
+    private val model: NewsViewModel by viewModel()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = NewsFragmentBinding.bind(view)
-        bindui()
+        adapterNews.setUpdatedData(InMemoryCache.news)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    model.getNews()
+                    bindui()
+                }
+            }
+        }
+
     }
 
 
@@ -37,6 +48,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
             }
             with(swipeNews) {
                 setOnRefreshListener {
+                    model.getNews()
                     isRefreshing = false
                 }
             }

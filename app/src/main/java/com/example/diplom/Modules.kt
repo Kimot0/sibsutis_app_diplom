@@ -38,7 +38,7 @@ val repositoryModule = module {
 val viewModelModules = module {
     viewModel { LoginViewModel(get()) }
     viewModel { ScheduleViewModel(get()) }
-    viewModel { NewsViewModel() }
+    viewModel { NewsViewModel(get()) }
 }
 
 fun getModules(): List<Module> {

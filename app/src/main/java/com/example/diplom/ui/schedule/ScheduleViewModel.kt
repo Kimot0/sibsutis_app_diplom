@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.domain.Requests
 import com.example.diplom.domain.entity.Lesson
+import com.example.diplom.domain.entity.News
 import com.example.diplom.domain.entity.ScheduleRequest
 import com.example.diplom.domain.repo.IScheduleRepo
 
@@ -14,7 +15,6 @@ class ScheduleViewModel(
         "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"
     )
     var tempList = mutableListOf<Lesson>()
-
     val mondayList = mutableListOf<Lesson>()
     val tuesdayList = mutableListOf<Lesson>()
     val wednesdayList = mutableListOf<Lesson>()
@@ -25,7 +25,11 @@ class ScheduleViewModel(
     suspend fun getShedule(groupID: ScheduleRequest) {
         return when (val result = repo.getSchedule(groupID)) {
             is Requests.Success -> {
-                InMemoryCache.groupSchedule = mutableListOf(result.data.toMutableList())
+                if(InMemoryCache.groupSchedule.isEmpty())InMemoryCache.groupSchedule = mutableListOf(result.data.toMutableList())
+                else{
+                    InMemoryCache.groupSchedule.clear()
+                    InMemoryCache.groupSchedule = mutableListOf(result.data.toMutableList())
+                }
                 tempList = result.data as MutableList<Lesson>
             }
 
@@ -36,7 +40,18 @@ class ScheduleViewModel(
 
     }
 
+    private fun clearStructs(){
+        mondayList.clear()
+        tuesdayList.clear()
+        wednesdayList.clear()
+        thursdayList.clear()
+        fridayList.clear()
+        saturdayList.clear()
+        InMemoryCache.groupSchedule.clear()
+    }
+
     fun sortSchedule(schedule: MutableList<Lesson>) {
+        clearStructs()
         schedule.forEach {
             when (it.weekDay) {
                 "ПН" -> {
@@ -96,5 +111,6 @@ class ScheduleViewModel(
                 it.lessonTime
             }
         }
+
     }
 }
