@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.diplom.R
 import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.ScheduleFragmentBinding
@@ -28,12 +29,10 @@ class ScheduleFragment : Fragment(R.layout.schedule_fragment) {
         binding = ScheduleFragmentBinding.bind(view)
         adapterSch = ScheduleViewPagerAdapter(this)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    model.getShedule(InMemoryCache.group)
-                    model.sortSchedule(model.tempList.toMutableList())
-                    bindui()
-                }
+            launch {
+                model.getShedule(InMemoryCache.group)
+                model.sortSchedule(model.tempList.toMutableList())
+                bindui()
             }
         }
     }
@@ -44,6 +43,10 @@ class ScheduleFragment : Fragment(R.layout.schedule_fragment) {
             TabLayoutMediator(scheduleTabLayout, scheduleViewPager) { tab, position ->
                 tab.text = model.tabTitles[position]
             }.attach()
+            groupTextViewShowing.text = InMemoryCache.group.groupID
+            scheduleSearchButton.setOnClickListener {
+                findNavController().navigate(R.id.action_schedule_to_search_schedule)
+            }
         }
     }
 }

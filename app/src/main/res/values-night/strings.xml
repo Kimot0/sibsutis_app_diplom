@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="search">search</string>
     <string name="app_name">SibsutisApp</string>
     <string name="title_activity_navigation">navigation_activity</string>
     <string name="title_news">News</string>
@@ -23,5 +25,4 @@
     <string name="typeoflesson">typeOfLesson</string>
     <string name="week_type">week_type</string>
     <string name="title_login" />
-    <string name="search">search</string>
 </resources>

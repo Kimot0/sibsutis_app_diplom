@@ -3,6 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/schedule_search_button"
+            android:src="@drawable/baseline_search"
+            android:layout_width="75dp"
+            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            android:contentDescription="search for another group schedule"/>
+        <TextView
+            android:id="@+id/group_text_view_showing"
+            android:layout_width="75dp"
+            android:layout_height="45dp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:layout_weight="9"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:text=""/>
+    </LinearLayout>
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/scheduleTabLayout"
