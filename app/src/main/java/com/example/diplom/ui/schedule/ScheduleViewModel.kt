@@ -39,7 +39,6 @@ class ScheduleViewModel(
         }
 
     }
-
     private fun clearStructs(){
         mondayList.clear()
         tuesdayList.clear()

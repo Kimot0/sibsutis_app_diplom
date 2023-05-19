@@ -38,7 +38,7 @@ class ScheduleFragment : Fragment(R.layout.schedule_fragment) {
         }
     }
 
-    fun bindui() {
+    private fun bindui() {
         with(binding) {
             scheduleViewPager.adapter = adapterSch
             TabLayoutMediator(scheduleTabLayout, scheduleViewPager) { tab, position ->

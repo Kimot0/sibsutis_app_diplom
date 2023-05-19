@@ -28,18 +28,9 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding = NewsFragmentBinding.bind(view)
         adapterNews.setUpdatedData(InMemoryCache.news)
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    model.getNews()
-                    bindui()
-                }
-            }
-        }
-
+        model.getNews()
+        bindui()
     }
-
-
     private fun bindui() {
         with(binding) {
             with(newsRecycler) {

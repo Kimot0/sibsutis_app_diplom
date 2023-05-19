@@ -35,8 +35,8 @@
         android:label="@string/title_news"
         tools:layout="@layout/detailed_news_fragment">
         <action
-            android:id="@+id/action_detailed_news_self"
-            app:destination="@id/detailed_news"
+            android:id="@+id/action_detailed_news_to_news"
+            app:destination="@id/navigation_news"
             app:enterAnim="@android:anim/slide_in_left"
             app:popUpTo="@id/navigation_news" />
     </fragment>
