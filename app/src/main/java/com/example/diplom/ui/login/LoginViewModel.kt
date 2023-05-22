@@ -17,7 +17,6 @@ class LoginViewModel(
             }
 
             is Requests.Error -> {
-                groupRes = "WTF"
                 0
             }
         }

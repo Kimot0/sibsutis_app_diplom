@@ -1,5 +1,6 @@
 package com.example.diplom
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ class NavigationActivity : AppCompatActivity() {
         installSplashScreen()
         binding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         onDestinationHideMenu()
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

@@ -12,19 +12,18 @@ import com.example.diplom.databinding.LoginFragmentBinding
 import com.example.diplom.domain.entity.Account
 import com.example.diplom.domain.entity.ScheduleRequest
 import com.example.diplom.domain.entity.UserAuthRequest
-import com.example.diplom.domain.entity.UserAuthResult
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.scope.Scope
 
+//TODO : Create security algorithm for encrypting password and login
+
+//TODO 2: Create token auth to stop login everytime we start app
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private lateinit var binding: LoginFragmentBinding
     private val model: LoginViewModel by viewModel()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +33,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private fun bindUi() {
         with(binding) {
-            LoginButton.setOnClickListener() {
+            LoginButton.setOnClickListener{
                 it.isClickable = false
                 lifecycleScope.launch {
                     login()
@@ -53,11 +52,10 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                 1 -> {
                     InMemoryCache.user = Account(0,login,model.groupRes)
                     InMemoryCache.group = ScheduleRequest(model.groupRes)
-                    Toast.makeText(context,"gj",Toast.LENGTH_LONG).show()
                     findNavController().navigate(R.id.action_navigation_login_to_navigation_news)
                 }
                 0 -> {
-                    Toast.makeText(context, model.groupRes, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context,"Something went wrong", Toast.LENGTH_LONG).show()
                 }
             }
         }

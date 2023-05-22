@@ -24,9 +24,7 @@
         tools:layout="@layout/news_fragment" >
         <action
             android:id="@+id/action_navigation_news_to_detailed_news"
-            app:destination="@id/detailed_news"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_in_left"/>
+            app:destination="@id/detailed_news" />
     </fragment>
 
     <fragment
