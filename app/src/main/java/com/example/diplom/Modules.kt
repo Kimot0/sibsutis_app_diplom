@@ -39,6 +39,7 @@ val viewModelModules = module {
     viewModel { LoginViewModel(get()) }
     viewModel { ScheduleViewModel(get()) }
     viewModel { NewsViewModel(get()) }
+    viewModel { DetailedNewsViewModel(get())}
 }
 
 fun getModules(): List<Module> {

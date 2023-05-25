@@ -15,7 +15,8 @@ class NewsCardAdapter(
 ) :
     RecyclerView.Adapter<NewsCardAdapter.NewsViewHolder>() {
 
-    private var dataList: MutableList<News> = InMemoryCache.news
+    //private var dataList: MutableList<News> = InMemoryCache.news
+    private var dataList: MutableList<News> = mutableListOf()
 
     inner class NewsViewHolder(
         private val binding: ItemNewsBinding,

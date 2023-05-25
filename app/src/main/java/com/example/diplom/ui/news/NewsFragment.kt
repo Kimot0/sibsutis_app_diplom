@@ -15,6 +15,7 @@ import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.NewsFragmentBinding
 import com.example.diplom.domain.entity.News
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,8 +28,11 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = NewsFragmentBinding.bind(view)
-        adapterNews.setUpdatedData(InMemoryCache.news)
-        model.getNews()
+        viewLifecycleOwner.lifecycleScope.launch {
+            model.newsStateFlow.collect {
+                adapterNews.setUpdatedData(it)
+            }
+        }
         bindui()
     }
     private fun bindui() {
