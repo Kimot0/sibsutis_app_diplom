@@ -93,6 +93,7 @@ class AttendanceFragment : Fragment(R.layout.attendance_fragment) {
 
         val datePickerDialog = DatePickerDialog(
             requireContext(),
+            R.style.DialogTheme,
             { _, year, month, dayOfMonth ->
                 date.set(Calendar.YEAR, year)
                 date.set(Calendar.MONTH, month)

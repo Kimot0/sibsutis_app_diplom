@@ -40,7 +40,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private fun login() {
         with(binding) {
-            val role = "HEAD"
+            val role = "TEACHER"
             val login = loginEditText.text.toString()
             val pass = passwordEditText.text.toString()
             if (logs.contains(login) && passwords.contains(pass)) {
