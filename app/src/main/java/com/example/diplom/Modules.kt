@@ -1,6 +1,7 @@
 package com.example.diplom
 
 import com.example.diplom.data.dataSource.SibsutisRemoteDataSource
+import com.example.diplom.data.dataSource.database.AppDatabase
 import com.example.diplom.data.dataSource.provideSibsutisServices
 import com.example.diplom.data.remote.network.INetwork
 import com.example.diplom.data.remote.network.Network
@@ -23,6 +24,7 @@ val networkModule = module {
     single { SupportInterceptor() }
     single<INetwork> { Network(get()) }
     single { provideSibsutisServices(get()) }
+    single {AppDatabase.getDatabase(get())}
 }
 
 val remoteModule = module {
@@ -31,11 +33,11 @@ val remoteModule = module {
 
 val repositoryModule = module {
     single<IUserRepo> { UserRepo(get()) }
-    single<IScheduleRepo> {ScheduleRepo(get())}
-    single<INewsRepo>{NewsRepo(get())}
+    single<IScheduleRepo> {ScheduleRepo(get(),get())}
+    single<INewsRepo>{NewsRepo(get(),get())}
 }
 
-val viewModelModules = module {
+val viewModelModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel { ScheduleViewModel(get()) }
     viewModel { NewsViewModel(get()) }
@@ -43,5 +45,5 @@ val viewModelModules = module {
 }
 
 fun getModules(): List<Module> {
-    return listOf(networkModule,viewModelModules, repositoryModule, remoteModule)
+    return listOf(networkModule,viewModelModule, repositoryModule, remoteModule)
 }

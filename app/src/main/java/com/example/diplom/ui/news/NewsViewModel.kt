@@ -29,9 +29,15 @@ class NewsViewModel(private val repo: INewsRepo) : ViewModel() {
                     _newsState.emit(result.data)
                 }
                 is Requests.Error -> {
+                    getNewsFromDatabase()
                     _error.emit(result.exception)
                 }
             }
+        }
+    }
+    private fun getNewsFromDatabase(){
+        viewModelScope.launch {
+            _newsState.emit(repo.getNewsFromDatabase())
         }
     }
 }

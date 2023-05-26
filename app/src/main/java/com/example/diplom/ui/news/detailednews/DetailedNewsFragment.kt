@@ -24,7 +24,6 @@ class DetailedNewsFragment : Fragment(R.layout.detailed_news_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding = DetailedNewsFragmentBinding.bind(view)
         val newsIndex = arguments?.getInt("position") ?: 0
-        //bindui(InMemoryCache.news[newsIndex])
         viewLifecycleOwner.lifecycleScope.launch {
             model.deatailedNewsStateFlow.collect {
                 bindui(it[newsIndex])
