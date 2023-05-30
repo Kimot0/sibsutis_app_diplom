@@ -8,7 +8,10 @@ import com.example.diplom.domain.entity.UserAuthResult
 import com.example.diplom.domain.repo.IUserRepo
 import java.util.UUID
 
-class UserRepo(private val source: SibsutisRemoteDataSource) : IUserRepo {
+class UserRepo(
+    private val source: SibsutisRemoteDataSource,
+    private val userDbRepository: UserDbRepository
+) : IUserRepo {
 
     override suspend fun auth(user: UserAuthRequest): Requests<UserAuthResult> {
         return when (val result = source.auth(user)) {
@@ -23,5 +26,9 @@ class UserRepo(private val source: SibsutisRemoteDataSource) : IUserRepo {
                 )
             }
         }
+    }
+
+    override suspend fun saveUser(user: UserAuthResult) {
+        TODO("Not yet implemented")
     }
 }
