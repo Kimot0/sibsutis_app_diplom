@@ -1,25 +1,31 @@
 package com.example.diplom.ui.login
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.diplom.domain.Requests
 import com.example.diplom.domain.entity.UserAuthRequest
+import com.example.diplom.domain.entity.UserAuthResult
 import com.example.diplom.domain.repo.IUserRepo
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val repo: IUserRepo
+    private val userRepository: IUserRepo
 ) : ViewModel() {
-    lateinit var groupRes:String
-    suspend fun auth(user: UserAuthRequest): Int {
-        return when (val result = repo.auth(user)) {
-            is Requests.Success -> {
-                groupRes = result.data.group
-                1
-            }
 
-            is Requests.Error -> {
-                0
-            }
+    private val _authState: MutableStateFlow<Requests<UserAuthResult>?> = MutableStateFlow(null)
+    val authState: StateFlow<Requests<UserAuthResult>?> = _authState
+
+    fun auth(login: String, password: String) {
+        viewModelScope.launch {
+            _authState.value = userRepository.auth(UserAuthRequest(login, password))
         }
+    }
 
+    fun saveUser(user: UserAuthResult) {
+        viewModelScope.launch {
+
+        }
     }
 }
