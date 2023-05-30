@@ -24,32 +24,38 @@
         tools:layout="@layout/news_fragment" >
         <action
             android:id="@+id/action_navigation_news_to_detailed_news"
-            app:destination="@id/detailed_news"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_in_left"/>
+            app:destination="@id/detailed_news" />
     </fragment>
 
     <fragment
         android:id="@+id/detailed_news"
         android:name="com.example.diplom.ui.news.detailednews.DetailedNewsFragment"
         android:label="@string/title_news"
-        tools:layout="@layout/detailed_news_fragment">
-        <action
-            android:id="@+id/action_detailed_news_self"
-            app:destination="@id/detailed_news"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:popUpTo="@id/navigation_news" />
-    </fragment>
+        tools:layout="@layout/detailed_news_fragment"/>
 
     <fragment
         android:id="@+id/navigation_schedule"
         android:name="com.example.diplom.ui.schedule.ScheduleFragment"
         android:label="@string/title_schedule"
-        tools:layout="@layout/schedule_fragment" />
+        tools:layout="@layout/schedule_fragment">
+        <action
+            android:id="@+id/action_schedule_to_search_schedule"
+            app:destination="@id/schedule_search" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_attendance"
         android:name="com.example.diplom.ui.attendance.AttendanceFragment"
         android:label="@string/title_attendance"
         tools:layout="@layout/attendance_fragment" />
+
+    <fragment
+        android:id="@+id/schedule_search"
+        android:name="com.example.diplom.ui.schedule.scheduleSearch.ScheduleSearchFragment"
+        tools:layout="@layout/schedule_search_fragment">
+        <action
+            android:id="@+id/action_navigation_schedule_search_to_schedule"
+            app:destination="@id/navigation_schedule" />
+    </fragment>
+
 </navigation>

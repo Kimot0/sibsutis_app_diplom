@@ -4,25 +4,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.diplom.NavigationActivity
 import com.example.diplom.R
+import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.LoginFragmentBinding
+import com.example.diplom.domain.entity.Account
+import com.example.diplom.domain.entity.ScheduleRequest
+import com.example.diplom.domain.entity.UserAuthRequest
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
+//TODO : Create security algorithm for encrypting password and login
+
+//TODO 2: Create token auth to stop login everytime we start app
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
-    private var logs: MutableList<String> = mutableListOf(
-        "admin", "nmoniev@gmail.com", "egorbauer@yandex.ru"
-    )
-    private var passwords: MutableList<String> = mutableListOf(
-        "12345", "qwerty", "warthunderbaby"
-    )
-
     private lateinit var binding: LoginFragmentBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val model: LoginViewModel by viewModel()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,13 +34,17 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private fun bindUi() {
         with(binding) {
-            LoginButton.setOnClickListener() {
-                login()
+            LoginButton.setOnClickListener{
+                it.isClickable = false
+                lifecycleScope.launch {
+                    login()
+                    it.isClickable = true
+                }
             }
         }
     }
 
-    private fun login() {
+    private suspend fun login() {
         with(binding) {
             val role = "TEACHER"
             val login = loginEditText.text.toString()

@@ -1,6 +1,5 @@
 package com.example.diplom.ui.schedule
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +26,7 @@ class ScheduleTabRecyclerAdapter: RecyclerView.Adapter<ScheduleTabRecyclerAdapte
                     tvLessonName.text = name
                     tvLessonType.text = typeOfLesson
                     tvLessonTeacher.text = teacher
-                    tvLessonWeek.text = weeekType
+                    tvLessonWeek.text = weekType + " weeks"
                 }
             }
         }
