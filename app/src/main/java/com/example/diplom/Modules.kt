@@ -6,12 +6,12 @@ import com.example.diplom.data.dataSource.provideSibsutisServices
 import com.example.diplom.data.remote.network.INetwork
 import com.example.diplom.data.remote.network.Network
 import com.example.diplom.data.remote.network.SupportInterceptor
-import com.example.diplom.data.repo.NewsRepo
-import com.example.diplom.data.repo.ScheduleRepo
-import com.example.diplom.data.repo.UserRepo
-import com.example.diplom.domain.repo.INewsRepo
-import com.example.diplom.domain.repo.IScheduleRepo
-import com.example.diplom.domain.repo.IUserRepo
+import com.example.diplom.data.repo.NewsRepository
+import com.example.diplom.data.repo.ScheduleRepository
+import com.example.diplom.data.repo.UserRepository
+import com.example.diplom.domain.repo.INewsRepository
+import com.example.diplom.domain.repo.IScheduleRepository
+import com.example.diplom.domain.repo.IUserRepository
 import com.example.diplom.ui.login.LoginViewModel
 import com.example.diplom.ui.news.NewsViewModel
 import com.example.diplom.ui.news.detailednews.DetailedNewsViewModel
@@ -32,9 +32,9 @@ val remoteModule = module {
 }
 
 val repositoryModule = module {
-    single<IUserRepo> { UserRepo(get()) }
-    single<IScheduleRepo> {ScheduleRepo(get(),get())}
-    single<INewsRepo>{NewsRepo(get(),get())}
+    single<IUserRepository> { UserRepository(get()) }
+    single<IScheduleRepository> {ScheduleRepository(get(),get())}
+    single<INewsRepository>{NewsRepository(get(),get())}
 }
 
 val viewModelModule = module {

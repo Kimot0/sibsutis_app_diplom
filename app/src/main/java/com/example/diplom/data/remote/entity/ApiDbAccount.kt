@@ -7,17 +7,15 @@ import androidx.room.PrimaryKey
 import com.example.diplom.domain.entity.Account
 
 @Entity(
-    tableName = "accounts",
-    indices = [Index("username",unique=true)]
+    tableName = "accounts"
 )
 
 data class ApiDbAccount(
     @PrimaryKey(autoGenerate = true) val id : Long,
-    @ColumnInfo(name = "username", collate = ColumnInfo.NOCASE) val username:String,
-    val password:String,
-    val group:String,
-    @ColumnInfo(name = "created_at")val createdAt : Long,
+    @ColumnInfo(name = "username") val username:String,
+    @ColumnInfo(name = "group")val group:String,
 )
+
 fun ApiDbAccount.toAccount() = Account(
     id = this.id,
     name = this.username,

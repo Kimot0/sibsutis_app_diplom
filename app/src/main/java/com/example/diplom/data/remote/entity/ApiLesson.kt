@@ -22,7 +22,9 @@ data class ApiLesson(
     @Json(name = "studyRoom")
     val studyRoom: String,
     @Json(name = "weekType")
-    val weekType: String
+    val weekType: String,
+    @Json(name = "id")
+    val id: Int
 )
 
 fun ApiLesson.toLesson() = Lesson(
@@ -34,4 +36,15 @@ fun ApiLesson.toLesson() = Lesson(
     weekType = this.weekType,
     groupID = this.groupID,
     weekDay = this.dayOfWeek
+)
+fun ApiLesson.toApiDbLesson() = ApiDbSchedule(
+    lessonTime = this.startTime,
+    teacher = this.teacherName,
+    classroom = this.studyRoom,
+    typeOfLesson = this.subjectType,
+    name = this.subjectName,
+    weekType = this.weekType,
+    groupID = this.groupID,
+    weekDay = this.dayOfWeek,
+    id = this.id
 )
