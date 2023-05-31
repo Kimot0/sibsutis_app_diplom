@@ -1,115 +1,53 @@
 package com.example.diplom.ui.schedule
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.diplom.data.dataSource.database.InMemoryCache
-import com.example.diplom.domain.Requests
 import com.example.diplom.domain.entity.Lesson
-import com.example.diplom.domain.entity.News
 import com.example.diplom.domain.entity.ScheduleRequest
-import com.example.diplom.domain.repo.IScheduleRepo
+import com.example.diplom.domain.repo.IScheduleRepository
+import com.example.diplom.utils.Event
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 
 class ScheduleViewModel(
-    private val repo: IScheduleRepo
+    private val scheduleRepository: IScheduleRepository,
 ) : ViewModel() {
     val tabTitles = arrayOf(
         "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"
     )
-    var tempList = mutableListOf<Lesson>()
-    val mondayList = mutableListOf<Lesson>()
-    val tuesdayList = mutableListOf<Lesson>()
-    val wednesdayList = mutableListOf<Lesson>()
-    val thursdayList = mutableListOf<Lesson>()
-    val fridayList = mutableListOf<Lesson>()
-    val saturdayList = mutableListOf<Lesson>()
 
-    suspend fun getShedule(groupID: ScheduleRequest) {
-        return when (val result = repo.getSchedule(groupID)) {
-            is Requests.Success -> {
-                if(InMemoryCache.groupSchedule.isEmpty())InMemoryCache.groupSchedule = mutableListOf(result.data.toMutableList())
-                else{
-                    InMemoryCache.groupSchedule.clear()
-                    InMemoryCache.groupSchedule = mutableListOf(result.data.toMutableList())
-                }
-                tempList = result.data as MutableList<Lesson>
-            }
+    private val _scheduleStateFlow = MutableStateFlow<Event<List<Lesson>>?>(null)
+    var scheduleStateFlow = _scheduleStateFlow.asStateFlow().filterNotNull()
 
-            is Requests.Error -> {
-                tempList = mutableListOf()
+    private val _dailyScheduleStateFlow = MutableStateFlow<Event<List<Lesson>>?>(null)
+    var dailyScheduleStateFlow = _dailyScheduleStateFlow.asStateFlow().filterNotNull()
+
+    fun getShedule(groupID: ScheduleRequest) {
+        viewModelScope.launch {
+            try {
+                _scheduleStateFlow.emit(Event.loading())
+                val schedule = scheduleRepository.getSchedule(groupID)
+                _scheduleStateFlow.emit(Event.success(schedule))
+            } catch (e: Exception) {
+                _scheduleStateFlow.emit(Event.error(e))
             }
         }
-
-    }
-    private fun clearStructs(){
-        mondayList.clear()
-        tuesdayList.clear()
-        wednesdayList.clear()
-        thursdayList.clear()
-        fridayList.clear()
-        saturdayList.clear()
-        InMemoryCache.groupSchedule.clear()
     }
 
-    fun sortSchedule(schedule: MutableList<Lesson>) {
-        clearStructs()
-        schedule.forEach {
-            when (it.weekDay) {
-                "ПН" -> {
-                    mondayList.add(it)
-                }
-
-                "ВТ" -> {
-                    tuesdayList.add(it)
-                }
-
-                "СР" -> {
-                    wednesdayList.add(it)
-                }
-
-                "ЧТ" -> {
-                    thursdayList.add(it)
-                }
-
-                "ПТ" -> {
-                    fridayList.add(it)
-                }
-
-                "СБ" -> {
-                    saturdayList.add(it)
-                }
+    fun getScheduleFromDatabase(groupID: String, weekDay: String) {
+        viewModelScope.launch {
+            try {
+                _dailyScheduleStateFlow.emit(Event.loading())
+                val dailySchedule =
+                    scheduleRepository.getScheduleFromDatabaseByWeekDay(groupID, weekDay)
+                _dailyScheduleStateFlow.emit(Event.success(dailySchedule))
+            } catch (e: Exception) {
+                _dailyScheduleStateFlow.emit(Event.error(e))
             }
         }
-        for (day in tabTitles) {
-            when (day) {
-                "ПН" -> {
-                    InMemoryCache.groupSchedule.add(0, mondayList)
-                }
-
-                "ВТ" -> {
-                    InMemoryCache.groupSchedule.add(1, tuesdayList)
-                }
-
-                "СР" -> {
-                    InMemoryCache.groupSchedule.add(2, wednesdayList)
-                }
-
-                "ЧТ" -> {
-                    InMemoryCache.groupSchedule.add(3, thursdayList)
-                }
-
-                "ПТ" -> {
-                    InMemoryCache.groupSchedule.add(4, fridayList)
-                }
-
-                "СБ" -> {
-                    InMemoryCache.groupSchedule.add(5, saturdayList)
-                }
-            }
-        }
-        InMemoryCache.groupSchedule.forEach {
-            it.sortBy {
-                it.lessonTime
-            }
-        }
-
     }
+
 }

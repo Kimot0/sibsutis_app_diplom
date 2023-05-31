@@ -9,33 +9,53 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplom.R
 import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.ScheduleTabFragmentBinding
+import com.example.diplom.domain.entity.Lesson
+import com.example.diplom.utils.Status
+import com.example.diplom.utils.collectOnStart
+import com.example.diplom.utils.convertNumberToDayOfWeek
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ScheduleTabFragment : Fragment(R.layout.schedule_tab_fragment) {
 
     private lateinit var binding: ScheduleTabFragmentBinding
-    private val model: ScheduleViewModel by viewModel()
+    private val viewModel: ScheduleViewModel by viewModel()
     private val adapter: ScheduleTabRecyclerAdapter = ScheduleTabRecyclerAdapter()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = ScheduleTabFragmentBinding.bind(view)
+        arguments?.takeIf { it.containsKey("position") }?.apply {
+            val position = getInt("position")
+            position.convertNumberToDayOfWeek()
+                ?.let { viewModel.getScheduleFromDatabase(InMemoryCache.group.groupID, it) }
+        }
         bindUI()
+        collectData()
 
     }
 
-     fun bindUI() {
+    fun bindUI() {
         with(binding) {
             rvScheduleTab.adapter = adapter
             rvScheduleTab.layoutManager = LinearLayoutManager(context)
-            arguments?.takeIf { it.containsKey("position") }?.apply {
-                val position = getInt("position")
-                if (InMemoryCache.groupSchedule[position].isEmpty()) {
-                    tvNoLesson.text = "Нет занятий"
+        }
+    }
+
+    private fun collectData() {
+        collectOnStart(viewModel.dailyScheduleStateFlow) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    if (it.data?.isEmpty() == true) {
+                        binding.tvNoLesson.text = "No lessons"
+                    } else {
+                        it.data?.let { lessons -> adapter.setUpdatedData(lessons) }
+                    }
                 }
-                adapter.setUpdatedData(InMemoryCache.groupSchedule[position])
+                Status.ERROR -> Unit
+                Status.LOADING -> Unit
             }
         }
     }
