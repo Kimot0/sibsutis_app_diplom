@@ -1,43 +1,33 @@
 package com.example.diplom.ui.news
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.diplom.data.dataSource.database.InMemoryCache
-import com.example.diplom.data.remote.network.NetworkErrors
-import com.example.diplom.domain.Requests
 import com.example.diplom.domain.entity.News
-import com.example.diplom.domain.repo.INewsRepo
+import com.example.diplom.domain.repo.INewsRepository
+import com.example.diplom.utils.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
-class NewsViewModel(private val repo: INewsRepo) : ViewModel() {
+class NewsViewModel(private val newsRepository: INewsRepository) : ViewModel() {
 
-    private val _newsState = MutableStateFlow<List<News>?>(null)
-    val newsStateFlow = _newsState.asStateFlow().filterNotNull()
-    private val _error = MutableStateFlow<NetworkErrors?>(null)
+    private val _newsStateFlow = MutableStateFlow<Event<List<News>>?>(null)
+    val newsStateFlow = _newsStateFlow.asStateFlow().filterNotNull()
 
     init {
         getNews()
     }
+
     fun getNews() {
         viewModelScope.launch {
-            when (val result = repo.getNews()) {
-                is Requests.Success -> {
-                    _newsState.emit(result.data)
-                }
-                is Requests.Error -> {
-                    getNewsFromDatabase()
-                    _error.emit(result.exception)
-                }
+            try {
+                _newsStateFlow.emit(Event.loading())
+                val schedule = newsRepository.getNews()
+                _newsStateFlow.emit(Event.success(schedule))
+            } catch (e: Exception) {
+                _newsStateFlow.emit(Event.error(e))
             }
-        }
-    }
-    private fun getNewsFromDatabase(){
-        viewModelScope.launch {
-            _newsState.emit(repo.getNewsFromDatabase())
         }
     }
 }

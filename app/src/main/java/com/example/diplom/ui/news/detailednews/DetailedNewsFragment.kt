@@ -11,6 +11,8 @@ import com.example.diplom.R
 import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.DetailedNewsFragmentBinding
 import com.example.diplom.domain.entity.News
+import com.example.diplom.utils.Status
+import com.example.diplom.utils.collectOnStart
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,18 +20,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class DetailedNewsFragment : Fragment(R.layout.detailed_news_fragment) {
 
     private lateinit var binding: DetailedNewsFragmentBinding
-    private val model: DetailedNewsViewModel by viewModel()
+    private val viewModel: DetailedNewsViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = DetailedNewsFragmentBinding.bind(view)
         val newsIndex = arguments?.getInt("position") ?: 0
-        viewLifecycleOwner.lifecycleScope.launch {
-            model.deatailedNewsStateFlow.collect {
-                bindui(it[newsIndex])
-            }
-        }
-
+        collectData(newsIndex)
     }
 
     private fun bindui(news: News) {
@@ -42,6 +39,17 @@ class DetailedNewsFragment : Fragment(R.layout.detailed_news_fragment) {
             }
             backButton.setOnClickListener {
                 findNavController().popBackStack()
+            }
+        }
+    }
+    private fun collectData(newsIndex:Int) {
+        collectOnStart(viewModel.deatailedNewsStateFlow) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    bindui(it.data!![newsIndex])
+                }
+                Status.ERROR -> Unit
+                Status.LOADING -> Unit
             }
         }
     }

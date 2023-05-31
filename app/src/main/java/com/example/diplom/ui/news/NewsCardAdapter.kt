@@ -36,8 +36,8 @@ class NewsCardAdapter(
         }
     }
 
-    fun setUpdatedData(dataList: List<News>) {
-        this.dataList = dataList.toMutableList()
+    fun setUpdatedData(dataList: List<News>?) {
+        this.dataList = dataList?.toMutableList()!!
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {

@@ -1,21 +1,15 @@
 package com.example.diplom.ui.news
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplom.R
-import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.NewsFragmentBinding
-import com.example.diplom.domain.entity.News
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
+import com.example.diplom.utils.Status
+import com.example.diplom.utils.collectOnStart
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,16 +17,12 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
 
     private lateinit var binding: NewsFragmentBinding
     private val adapterNews: NewsCardAdapter = NewsCardAdapter(this::onItemClick)
-    private val model: NewsViewModel by viewModel()
+    private val viewModel: NewsViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = NewsFragmentBinding.bind(view)
-        viewLifecycleOwner.lifecycleScope.launch {
-            model.newsStateFlow.collect {
-                adapterNews.setUpdatedData(it)
-            }
-        }
+        collectData()
         bindui()
     }
     private fun bindui() {
@@ -43,7 +33,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
             }
             with(swipeNews) {
                 setOnRefreshListener {
-                    model.getNews()
+                    viewModel.getNews()
                     isRefreshing = false
                 }
             }
@@ -59,5 +49,15 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         )
     }
 
-
+    private fun collectData() {
+        collectOnStart(viewModel.newsStateFlow) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    adapterNews.setUpdatedData(it.data)
+                }
+                Status.ERROR -> Unit
+                Status.LOADING -> Unit
+            }
+        }
+    }
 }
