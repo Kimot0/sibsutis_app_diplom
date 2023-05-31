@@ -34,6 +34,9 @@ class ScheduleSearchFragment : Fragment(R.layout.schedule_search_fragment) {
                     }
                 }
             }
+            searchBackButton.setOnClickListener{
+                findNavController().popBackStack()
+            }
         }
     }
 }
