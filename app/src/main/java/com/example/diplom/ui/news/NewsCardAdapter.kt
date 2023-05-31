@@ -1,12 +1,8 @@
 package com.example.diplom.ui.news
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diplom.R
-import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.ItemNewsBinding
 import com.example.diplom.domain.entity.News
 
@@ -15,7 +11,6 @@ class NewsCardAdapter(
 ) :
     RecyclerView.Adapter<NewsCardAdapter.NewsViewHolder>() {
 
-    //private var dataList: MutableList<News> = InMemoryCache.news
     private var dataList: MutableList<News> = mutableListOf()
 
     inner class NewsViewHolder(

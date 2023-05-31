@@ -1,20 +1,14 @@
 package com.example.diplom.ui.news.detailednews
 
-
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.diplom.R
-import com.example.diplom.data.dataSource.database.InMemoryCache
 import com.example.diplom.databinding.DetailedNewsFragmentBinding
 import com.example.diplom.domain.entity.News
 import com.example.diplom.utils.Status
 import com.example.diplom.utils.collectOnStart
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailedNewsFragment : Fragment(R.layout.detailed_news_fragment) {
