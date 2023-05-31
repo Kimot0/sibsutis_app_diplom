@@ -1,7 +1,6 @@
 package com.example.diplom.domain.repo
 
 import com.example.diplom.data.remote.entity.ApiDbNews
-import com.example.diplom.domain.Requests
 import com.example.diplom.domain.entity.News
 
 interface INewsRepository {

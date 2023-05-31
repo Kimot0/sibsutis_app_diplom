@@ -17,7 +17,7 @@ fun provideSibsutisServices(network: INetwork): ISibsutisRemoteServices =
 
 interface ISibsutisRemoteServices{
     @POST("login")
-    suspend fun auth(@Body userAuth: UserAuthRequest): ApiUser
+    suspend fun auth(@Body userAuth: UserAuthRequest): Response<ApiUser>
 
     @POST("schedule")
     suspend fun getSchedule(@Body groupID: ScheduleRequest): Response<List<ApiLesson>>
