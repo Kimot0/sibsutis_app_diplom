@@ -5,10 +5,9 @@ import com.example.diplom.data.remote.entity.toUserAuthResult
 import com.example.diplom.domain.Requests
 import com.example.diplom.domain.entity.UserAuthRequest
 import com.example.diplom.domain.entity.UserAuthResult
-import com.example.diplom.domain.repo.IUserRepo
-import java.util.UUID
+import com.example.diplom.domain.repo.IUserRepository
 
-class UserRepo(private val source: SibsutisRemoteDataSource) : IUserRepo {
+class UserRepository(private val source: SibsutisRemoteDataSource) : IUserRepository {
 
     override suspend fun auth(user: UserAuthRequest): Requests<UserAuthResult> {
         return when (val result = source.auth(user)) {

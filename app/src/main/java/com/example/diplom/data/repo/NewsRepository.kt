@@ -7,30 +7,19 @@ import com.example.diplom.data.remote.entity.toApiDbNews
 import com.example.diplom.data.remote.entity.toNews
 import com.example.diplom.domain.Requests
 import com.example.diplom.domain.entity.News
-import com.example.diplom.domain.repo.INewsRepo
+import com.example.diplom.domain.repo.INewsRepository
 
-class NewsRepo(
+class NewsRepository(
     private val source: SibsutisRemoteDataSource,
     private val database: AppDatabase
-) : INewsRepo {
-    override suspend fun getNews(): Requests<List<News>> {
-        return when (val result = source.getNews()) {
-            is Requests.Success -> {
-                database.getNewsDao().deleteOldNews()
-                Requests.Success(
-                    result.data.map {
-                        with(database.getNewsDao()) {
-                            insertNews(it.toApiDbNews())
-                        }
-                        it.toNews()
-                    }
-                )
-            }
-
-            is Requests.Error -> {
-                Requests.Error(
-                    result.exception
-                )
+) : INewsRepository {
+    override suspend fun getNews(): List<News>? {
+        val databaseNews = getNewsFromDatabase()
+        return databaseNews.ifEmpty {
+            val result = source.getNews()
+            return result?.map {
+                database.getNewsDao().insertNews(it.toApiDbNews())
+                it.toNews()
             }
         }
     }
