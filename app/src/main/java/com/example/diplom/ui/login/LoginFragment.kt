@@ -22,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private lateinit var binding: LoginFragmentBinding
-    private val model: LoginViewModel by viewModel()
+    private val viewModel: LoginViewModel by viewModel()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,10 +48,10 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
             val login = loginEditText.text.toString()
             val pass = passwordEditText.text.toString()
             val user = UserAuthRequest(login, pass)
-            when(model.auth(user)) {
+            when(viewModel.auth(user)) {
                 1 -> {
-                    InMemoryCache.user = Account(0,login,model.groupRes)
-                    InMemoryCache.group = ScheduleRequest(model.groupRes)
+                    InMemoryCache.user = Account(0,login,viewModel.groupRes)
+                    InMemoryCache.group = ScheduleRequest(viewModel.groupRes)
                     findNavController().navigate(R.id.action_navigation_login_to_navigation_news)
                 }
                 0 -> {
