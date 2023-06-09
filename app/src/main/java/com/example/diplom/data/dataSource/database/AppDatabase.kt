@@ -4,19 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.diplom.data.remote.entity.ApiDbAccount
 import com.example.diplom.data.remote.entity.ApiDbNews
-import com.example.diplom.data.remote.entity.ApiDbSchedule
+import com.example.diplom.domain.entity.StudentsOfGroupDbEntity
+import com.example.diplom.domain.entity.UserDbEntity
 
 @Database(
     version = 1,
     entities = [
-        ApiDbAccount::class,
+        UserDbEntity::class,
         ApiDbNews::class,
-        ApiDbSchedule::class
+        StudentsOfGroupDbEntity::class
     ]
 )
-abstract class AppDatabase:RoomDatabase() {
+
+abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
@@ -38,8 +39,7 @@ abstract class AppDatabase:RoomDatabase() {
         }
     }
 
-    abstract fun getAccountsDao():AccountsDao
-    abstract fun getNewsDao():NewsDao
-    abstract fun getScheduleDao():ScheduleDao
-
+    abstract fun getUserDao(): UserDao
+    abstract fun getNewsDao(): NewsDao
+    abstract fun getGroupDao(): GroupDao
 }

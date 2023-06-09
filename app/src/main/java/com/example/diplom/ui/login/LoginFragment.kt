@@ -1,6 +1,7 @@
 package com.example.diplom.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +12,9 @@ import com.example.diplom.databinding.LoginFragmentBinding
 import com.example.diplom.domain.Requests
 import com.example.diplom.domain.entity.Role
 import com.example.diplom.domain.entity.UserAuthResult
+import com.example.diplom.utils.Status
+import com.example.diplom.utils.collectOnStart
+import com.example.diplom.utils.showLongToast
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,7 +27,6 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     private lateinit var binding: LoginFragmentBinding
     private val viewModel: LoginViewModel by viewModel()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = LoginFragmentBinding.bind(view)
@@ -32,16 +35,20 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     }
 
     private fun collectData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.authState.collect {
-                when (it) {
-                    is Requests.Success -> {
-                        onLoginSuccess(it.data)
-                    }
+        collectOnStart(viewModel.authState) { event ->
+            when (event.status) {
+                Status.LOADING -> {
+                    showLoading()
+                }
 
-                    else -> {
+                Status.SUCCESS -> {
+                    showContent()
+                    onLoginSuccess(event.data)
+                }
 
-                    }
+                Status.ERROR -> {
+                    showContent()
+                    requireContext().showLongToast("Ошибка входа")
                 }
             }
         }
@@ -50,9 +57,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     private fun bindUi() {
         with(binding) {
             LoginButton.setOnClickListener {
-                it.isClickable = false
                 login()
-                it.isClickable = true
             }
         }
     }
@@ -65,9 +70,8 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         }
     }
 
-    private fun onLoginSuccess(user: UserAuthResult) {
-        viewModel.saveUser(user)
-        when (user.role) {
+    private fun onLoginSuccess(user: UserAuthResult?) {
+        when (user?.role) {
             Role.STUDENT -> {
                 (requireActivity() as NavigationActivity).setupBottomNavigationBarForStudent()
             }
@@ -77,8 +81,22 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                 (requireActivity() as NavigationActivity).setupBottomNavigationBarForTeacher()
             }
 
-            Role.HEAD -> { viewModel.getGroup(user.group) }
+            Role.HEAD -> {
+                Unit
+            }
+
+            else -> {
+
+            }
         }
         findNavController().navigate(R.id.action_navigation_login_to_navigation_news)
+    }
+
+    private fun showLoading() {
+        binding.loader.visibility = View.VISIBLE
+    }
+
+    private fun showContent() {
+        binding.loader.visibility = View.GONE
     }
 }

@@ -8,8 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplom.R
 import com.example.diplom.databinding.AttendanceFragmentBinding
+import com.example.diplom.ui.login.LoginViewModel
+import com.example.diplom.utils.Status
+import com.example.diplom.utils.collectOnStart
+import com.example.diplom.utils.showLongToast
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,23 +38,7 @@ class AttendanceFragment : Fragment(R.layout.attendance_fragment) {
         "Лабораторное занятие"
     )
 
-    private var students: MutableList<String> = mutableListOf(
-        "Александрова Ангелина",
-        "Бауэр Егор",
-        "Бондаренко Антон",
-        "Давыдков Никита",
-        "Зырянов Константин",
-        "Иванов Артём",
-        "Исмаилов Рухид",
-        "Истомина Анна",
-        "Косарева Екатерина",
-        "Костин Кирилл",
-        "Кульбезекова Кристина",
-        "Меньщиков Данил",
-        "Мониев Никита",
-        "Подковыров Артем",
-        "Сотников Владимир"
-    )
+    private val viewModel: AttendanceViewModel by viewModel()
 
     private lateinit var binding: AttendanceFragmentBinding
     private lateinit var disciplineNameAdapter: ArrayAdapter<String>
@@ -60,12 +49,39 @@ class AttendanceFragment : Fragment(R.layout.attendance_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = AttendanceFragmentBinding.bind(view)
+
+        viewModel.getGroup()
+
         initAdapters()
         initClickListeners()
+        collectGroupState()
+    }
+
+    private fun collectGroupState() {
+        collectOnStart(viewModel.groupState) { event ->
+            when (event.status) {
+
+                Status.LOADING -> {
+                    showLoading()
+                }
+
+                Status.SUCCESS -> {
+                    showContent()
+                    event.data?.let { adapter.setUpdatedData(it) }
+                    binding.groupName.text = event.data?.first()?.studentGroup
+                }
+
+                Status.ERROR -> {
+                    showContent()
+                    requireContext().showLongToast("Ошибка получения списка группы")
+                }
+            }
+        }
     }
 
     private fun initAdapters() {
-        disciplineTypeAdapter = ArrayAdapter(requireContext(), R.layout.common_item, disciplineTypes)
+        disciplineTypeAdapter =
+            ArrayAdapter(requireContext(), R.layout.common_item, disciplineTypes)
         disciplineNameAdapter = ArrayAdapter(requireContext(), R.layout.common_item, disciplines)
 
         binding.disciplineNameSpinner.adapter = disciplineNameAdapter
@@ -73,8 +89,6 @@ class AttendanceFragment : Fragment(R.layout.attendance_fragment) {
 
         binding.studentsRecyclerView.adapter = adapter
         binding.studentsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        adapter.setUpdatedData(students)
     }
 
     private fun initClickListeners() {
@@ -82,6 +96,7 @@ class AttendanceFragment : Fragment(R.layout.attendance_fragment) {
             lessonDateEditText.setOnClickListener {
                 showDatePicker()
             }
+
             lessonDateField.setOnClickListener {
                 showDatePicker()
             }
@@ -105,5 +120,13 @@ class AttendanceFragment : Fragment(R.layout.attendance_fragment) {
         )
         datePickerDialog.datePicker.maxDate = LocalDate.now().toDate().time
         datePickerDialog.show()
+    }
+
+    private fun showLoading() {
+        binding.loader.visibility = View.VISIBLE
+    }
+
+    private fun showContent() {
+        binding.loader.visibility = View.GONE
     }
 }

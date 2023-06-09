@@ -4,14 +4,16 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.diplom.data.remote.entity.ApiStudentOfGroup
 import com.example.diplom.databinding.StudentAttendanceItemBinding
+import com.example.diplom.domain.entity.StudentOfGroup
 
 class AttendanceRecyclerAdapter : RecyclerView.Adapter<AttendanceRecyclerAdapter.ViewHolder>() {
 
-    private val dataList: MutableList<String> = mutableListOf()
+    private val dataList: MutableList<StudentOfGroup> = mutableListOf()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setUpdatedData(dataList: List<String>) {
+    fun setUpdatedData(dataList: List<StudentOfGroup>) {
         this.dataList.clear()
         this.dataList.addAll(dataList)
         notifyDataSetChanged()
@@ -36,8 +38,9 @@ class AttendanceRecyclerAdapter : RecyclerView.Adapter<AttendanceRecyclerAdapter
 
     inner class ViewHolder(private val binding: StudentAttendanceItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: String) {
-            binding.studentName.text = data
+
+        fun bind(data: StudentOfGroup) {
+            binding.studentName.text = data.fio
             binding.attendanceButton.setOnClickListener {
                 if (binding.attendanceButton.text == "Н") {
                     binding.attendanceButton.text = ""
