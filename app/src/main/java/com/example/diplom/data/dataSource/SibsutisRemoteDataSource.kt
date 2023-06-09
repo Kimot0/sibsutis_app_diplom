@@ -2,6 +2,7 @@ package com.example.diplom.data.dataSource
 
 import com.example.diplom.data.remote.entity.ApiLesson
 import com.example.diplom.data.remote.entity.ApiNews
+import com.example.diplom.data.remote.entity.ApiScheduleGroup
 import com.example.diplom.data.remote.entity.ApiUser
 import com.example.diplom.domain.entity.ScheduleRequest
 import com.example.diplom.domain.entity.UserAuthRequest
@@ -29,5 +30,13 @@ class SibsutisRemoteDataSource(private val api: ISibsutisRemoteServices) {
             return response.body()
         }
         throw RuntimeException("Error while loading news from remote source")
+    }
+
+    suspend fun getScheduleGroups():List<ApiScheduleGroup>?{
+        val response = api.getScheduleGroups()
+        if(response.isSuccessful){
+            return response.body()
+        }
+        throw RuntimeException("Error while loadingg groups from remote source")
     }
 }

@@ -7,13 +7,15 @@ import androidx.room.RoomDatabase
 import com.example.diplom.data.remote.entity.ApiDbAccount
 import com.example.diplom.data.remote.entity.ApiDbNews
 import com.example.diplom.data.remote.entity.ApiDbSchedule
+import com.example.diplom.data.remote.entity.ApiDbScheduleGroup
 
 @Database(
     version = 1,
     entities = [
         ApiDbAccount::class,
         ApiDbNews::class,
-        ApiDbSchedule::class
+        ApiDbSchedule::class,
+        ApiDbScheduleGroup::class
     ]
 )
 abstract class AppDatabase:RoomDatabase() {
@@ -41,5 +43,5 @@ abstract class AppDatabase:RoomDatabase() {
     abstract fun getAccountsDao():AccountsDao
     abstract fun getNewsDao():NewsDao
     abstract fun getScheduleDao():ScheduleDao
-
+    abstract fun getScheduleGroupsDao(): ScheduleGroupsDao
 }

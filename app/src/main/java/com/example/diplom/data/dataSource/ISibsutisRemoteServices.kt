@@ -2,8 +2,10 @@ package com.example.diplom.data.dataSource
 
 import com.example.diplom.data.remote.entity.ApiLesson
 import com.example.diplom.data.remote.entity.ApiNews
+import com.example.diplom.data.remote.entity.ApiScheduleGroup
 import com.example.diplom.data.remote.entity.ApiUser
 import com.example.diplom.data.remote.network.INetwork
+import com.example.diplom.domain.entity.ScheduleGroups
 import com.example.diplom.domain.entity.ScheduleRequest
 import com.example.diplom.domain.entity.UserAuthRequest
 import retrofit2.Response
@@ -24,4 +26,7 @@ interface ISibsutisRemoteServices{
 
     @POST("news")
     suspend fun getNews():Response<List<ApiNews>>
+
+    @POST("groups")
+    suspend fun getScheduleGroups():Response<List<ApiScheduleGroup>>
 }
