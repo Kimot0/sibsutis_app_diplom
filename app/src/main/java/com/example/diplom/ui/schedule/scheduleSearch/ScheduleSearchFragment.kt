@@ -22,7 +22,6 @@ class ScheduleSearchFragment : Fragment(R.layout.schedule_search_fragment) {
     private val viewModel: ScheduleSearchViewModel by viewModel()
     private lateinit var request: ScheduleRequest
     private val adapterSearch: ScheduleSearchRecyclerAdapter = ScheduleSearchRecyclerAdapter(this::onItemClick)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = ScheduleSearchFragmentBinding.bind(view)
@@ -31,10 +30,14 @@ class ScheduleSearchFragment : Fragment(R.layout.schedule_search_fragment) {
         bindUi()
     }
 
+    //TODO: TEXTWATCHER
+
     private fun bindUi() {
         with(binding) {
-            recyclerViewGroups.adapter = adapterSearch
-            recyclerViewGroups.layoutManager = LinearLayoutManager(requireContext())
+            with(recyclerViewGroups){
+                adapter = adapterSearch
+                layoutManager = LinearLayoutManager(requireContext())
+            }
             searchButton.setOnClickListener {
                 lifecycleScope.launch {
                     request = ScheduleRequest(searchEditText.text.toString())
@@ -63,7 +66,7 @@ class ScheduleSearchFragment : Fragment(R.layout.schedule_search_fragment) {
                     adapterSearch.bindUpdatedData(it.data)
                 }
                 Status.ERROR -> {
-                    Log.println(Log.WARN,"Custom","Error")
+                    Log.println(Log.WARN,"Custom","bad data")
                 }
                 Status.LOADING -> Unit
             }

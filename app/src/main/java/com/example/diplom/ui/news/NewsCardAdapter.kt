@@ -2,6 +2,7 @@ package com.example.diplom.ui.news
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplom.databinding.ItemNewsBinding
 import com.example.diplom.domain.entity.News
@@ -12,6 +13,7 @@ class NewsCardAdapter(
     RecyclerView.Adapter<NewsCardAdapter.NewsViewHolder>() {
 
     private var dataList: MutableList<News> = mutableListOf()
+    private lateinit var newsDiffUtil : NewsDiffUtil
 
     inner class NewsViewHolder(
         private val binding: ItemNewsBinding,
@@ -31,8 +33,11 @@ class NewsCardAdapter(
         }
     }
 
-    fun setUpdatedData(dataList: List<News>?) {
-        this.dataList = dataList?.toMutableList()!!
+    fun setUpdatedData(dataList: List<News>) {
+        newsDiffUtil = NewsDiffUtil(this.dataList,dataList)
+        val diffResult : DiffUtil.DiffResult = DiffUtil.calculateDiff(newsDiffUtil)
+        this.dataList = dataList.toMutableList()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {

@@ -53,7 +53,7 @@ class NewsFragment : Fragment(R.layout.news_fragment) {
         collectOnStart(viewModel.newsStateFlow) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    adapterNews.setUpdatedData(it.data)
+                    it.data?.let { it1 -> adapterNews.setUpdatedData(it1) }
                 }
                 Status.ERROR -> Unit
                 Status.LOADING -> Unit
