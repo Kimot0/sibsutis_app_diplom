@@ -36,8 +36,6 @@ class AttendanceTeacherRecyclerAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun setUpdatedData(dataList: List<TeacherAttendance>) {
-        ///this.dataList = dataList as MutableList<TeacherAttendance>
-        //this.dataList = dataList.toMutableList()
         this.dataList.clear()
         this.dataList.addAll(dataList)
         notifyDataSetChanged()
