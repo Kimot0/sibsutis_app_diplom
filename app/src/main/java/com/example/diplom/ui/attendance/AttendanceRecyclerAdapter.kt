@@ -4,18 +4,21 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diplom.data.remote.entity.ApiStudentOfGroup
 import com.example.diplom.databinding.StudentAttendanceItemBinding
 import com.example.diplom.domain.entity.StudentOfGroup
 
 class AttendanceRecyclerAdapter : RecyclerView.Adapter<AttendanceRecyclerAdapter.ViewHolder>() {
 
     private val dataList: MutableList<StudentOfGroup> = mutableListOf()
+    val templist: MutableMap<String,String> = mutableMapOf()
 
     @SuppressLint("NotifyDataSetChanged")
     fun setUpdatedData(dataList: List<StudentOfGroup>) {
         this.dataList.clear()
         this.dataList.addAll(dataList)
+        dataList.forEach{
+            templist.put(it.fio,"")
+        }
         notifyDataSetChanged()
     }
 
@@ -41,11 +44,14 @@ class AttendanceRecyclerAdapter : RecyclerView.Adapter<AttendanceRecyclerAdapter
 
         fun bind(data: StudentOfGroup) {
             binding.studentName.text = data.fio
+            ///inding.attendanceButton.text = " "
             binding.attendanceButton.setOnClickListener {
                 if (binding.attendanceButton.text == "Н") {
-                    binding.attendanceButton.text = ""
+                    binding.attendanceButton.text = "П"
+                    templist.put(data.fio,"П")
                 } else {
                     binding.attendanceButton.text = "Н"
+                    templist.put(data.fio,"Н")
                 }
             }
         }

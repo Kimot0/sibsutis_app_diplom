@@ -20,7 +20,7 @@ class Network(
     override val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(Urls.SibsutisURLS().BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .client(buildClient())
             .build()
     }

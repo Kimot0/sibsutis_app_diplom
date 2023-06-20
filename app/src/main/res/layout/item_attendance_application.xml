@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        app:cardCornerRadius="15dp"
         app:cardElevation="7dp">
 
         <LinearLayout
@@ -17,51 +16,44 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/picture"
+            <TextView
+                android:id="@+id/groupTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo_sibsutis">
-
-            </ImageView>
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="HelloWorld"
-                android:textSize="15sp"
-                android:textStyle="bold"></TextView>
+                android:text="Номер группы"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvContent"
+                android:id="@+id/disciplineTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="3"
-                android:text="HelloWorld"
-                android:textSize="12sp"></TextView>
+                android:text="Дисциплина"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tvAuthor"
+                android:id="@+id/lessonTypeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="3"
-                android:text="Nick"
+                android:text="Вид занятия"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/dataTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:text="Дата"
+                android:textColor="@color/black"
                 android:textAlignment="textEnd"
-                android:textSize="12sp"></TextView>
+                android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="3"
-                android:text="01.02.23"
-                android:textAlignment="textEnd"
-                android:textSize="12sp"></TextView>
 
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>

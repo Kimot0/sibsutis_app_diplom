@@ -77,12 +77,12 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
             }
 
             Role.TEACHER -> {
-                //TODO Подумать что делать для препода
+
                 (requireActivity() as NavigationActivity).setupBottomNavigationBarForTeacher()
             }
 
             Role.HEAD -> {
-                Unit
+                (requireActivity() as NavigationActivity).setupBottomNavigationBarForHead()
             }
 
             else -> {

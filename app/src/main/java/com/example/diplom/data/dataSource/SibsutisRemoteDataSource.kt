@@ -1,11 +1,10 @@
 package com.example.diplom.data.dataSource
 
-import com.example.diplom.data.remote.entity.ApiStudentOfGroup
-import com.example.diplom.data.remote.entity.ApiUser
+import com.example.diplom.data.remote.entity.*
 import com.example.diplom.data.remote.network.safeApiCall
-import com.example.diplom.domain.entity.ScheduleRequest
-import com.example.diplom.domain.entity.UserAuthRequest
-import com.example.diplom.domain.entity.UsersRequest
+import com.example.diplom.domain.entity.*
+import retrofit2.Response
+import retrofit2.http.Body
 import java.lang.RuntimeException
 
 class SibsutisRemoteDataSource(private val api: ISibsutisRemoteServices) {
@@ -31,5 +30,45 @@ class SibsutisRemoteDataSource(private val api: ISibsutisRemoteServices) {
             }
         }
         throw RuntimeException("Error while getting group")
+    }
+
+    suspend fun getDisciplines(group: String): List<ApiDiscipline> {
+        val response = api.getDisciplines(ScheduleRequest(group))
+        if (response.isSuccessful) {
+            response.body()?.let { disciplines ->
+                return disciplines
+            }
+        }
+        throw RuntimeException("Error while getting disciplines")
+    }
+
+    suspend fun sendGroupList(@Body group: ApiHeadSendList): String {
+        val response = api.sendGroupList(group)
+        if (response.isSuccessful) {
+            response.body()?.let { it ->
+                return it
+            }
+        }
+        throw RuntimeException("Error while getting disciplines")
+    }
+
+    suspend fun getGroupListForTeacher(teacherFIO: TeacherGetGroupListRequest): List<ApiGetHeadList> {
+        val response = api.getGroupListForTeacher(teacherFIO)
+        if (response.isSuccessful) {
+            response.body()?.let { disciplines ->
+                return disciplines
+            }
+        }
+        throw RuntimeException("Error while getting disciplines")
+    }
+
+    suspend fun sendGroupListByTeacher(list: HeadListForTeacher): String {
+        val response = api.sendGroupListByTeacher(list)
+        if (response.isSuccessful) {
+            response.body()?.let { disciplines ->
+                return disciplines
+            }
+        }
+        throw RuntimeException("Error while getting disciplines")
     }
 }

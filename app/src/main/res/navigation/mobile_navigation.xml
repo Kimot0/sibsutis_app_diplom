@@ -9,19 +9,19 @@
         android:id="@+id/navigation_login"
         android:name="com.example.diplom.ui.login.LoginFragment"
         android:label="@string/title_login"
-        tools:layout="@layout/login_fragment" >
+        tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_navigation_login_to_navigation_news"
             app:destination="@id/navigation_news"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_in_left"/>
+            app:exitAnim="@android:anim/slide_in_left" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_news"
         android:name="com.example.diplom.ui.news.NewsFragment"
         android:label="@string/title_news"
-        tools:layout="@layout/news_fragment" >
+        tools:layout="@layout/news_fragment">
         <action
             android:id="@+id/action_navigation_news_to_detailed_news"
             app:destination="@id/detailed_news" />
@@ -31,7 +31,7 @@
         android:id="@+id/detailed_news"
         android:name="com.example.diplom.ui.news.detailednews.DetailedNewsFragment"
         android:label="@string/title_news"
-        tools:layout="@layout/detailed_news_fragment"/>
+        tools:layout="@layout/detailed_news_fragment" />
 
     <fragment
         android:id="@+id/navigation_schedule"
@@ -48,6 +48,24 @@
         android:name="com.example.diplom.ui.attendance.AttendanceFragment"
         android:label="@string/title_attendance"
         tools:layout="@layout/attendance_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_attendance_teacher"
+        android:name="com.example.diplom.ui.attendanceTeacher.AttendanceTeacherFragment"
+        android:label="@string/title_attendance"
+        tools:layout="@layout/teacher_attendance_fragment">
+        <action
+            android:id="@+id/action_navigation_attendance_to_detailed_attendance"
+            app:destination="@id/navigation_detailed_attendance_teacher" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_detailed_attendance_teacher"
+        android:name="com.example.diplom.ui.attendanceTeacher.detailedteacherattendance.DetailedTeacherAttendanceFragment"
+        android:label="@string/title_attendance"
+        tools:layout="@layout/detailed_teacher_attendance_fragment"/>
 
     <fragment
         android:id="@+id/schedule_search"

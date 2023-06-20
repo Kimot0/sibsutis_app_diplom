@@ -15,5 +15,9 @@
         android:id="@+id/navigation_attendance"
         android:icon="@drawable/baseline_assignment"
         android:title="@string/title_attendance" />
+    <item
+        android:id="@+id/navigation_attendance_teacher"
+        android:icon="@drawable/baseline_assignment"
+        android:title="@string/title_attendance" />
 
 </menu>

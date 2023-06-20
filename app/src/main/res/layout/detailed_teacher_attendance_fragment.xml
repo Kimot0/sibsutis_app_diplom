@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="@dimen/common_padding_16"
-    android:paddingVertical="@dimen/common_padding_8">
+    android:paddingVertical="@dimen/common_padding_8"
+    tools:context=".ui.attendanceTeacher.detailedteacherattendance.DetailedTeacherAttendanceFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -18,102 +20,130 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageButton
+                android:id="@+id/back_button__detailed_teacher"
+                android:layout_width="69dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:contentDescription="back button"
+                android:background="@color/white"
+                android:src="@drawable/baseline_arrow_back_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
-                android:id="@+id/group_name"
+                android:id="@+id/group_name_teacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:text="ИП-916"
+                android:text="Номер группы"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/back_button__detailed_teacher"/>
 
-            <Spinner
-                android:id="@+id/discipline_name_spinner"
+            <TextView
+                android:id="@+id/discipline_name_teacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Дисциплина"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:layout_marginTop="@dimen/common_margin_16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/group_name" />
+                app:layout_constraintTop_toBottomOf="@id/group_name_teacher" />
 
-            <Spinner
-                android:id="@+id/discipline_type_spinner"
+            <TextView
+                android:id="@+id/discipline_type_teacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Вид занятия"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:layout_marginTop="@dimen/common_margin_16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/discipline_name_spinner" />
+                app:layout_constraintTop_toBottomOf="@id/discipline_name_teacher" />
+
+            <TextView
+                android:id="@+id/name_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ФИО Преподавателя"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginTop="@dimen/common_margin_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/discipline_type_teacher" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/teacher_name_field"
+                android:id="@+id/lesson_date_teacher"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_margin_16"
-                android:hint="@string/teacher_name"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/discipline_type_spinner">
+                app:layout_constraintTop_toBottomOf="@id/name_teacher">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/teacher_name_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textNoSuggestions"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lesson_date_field"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin_16"
-                android:hint="@string/pick_date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/teacher_name_field">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/lesson_date_edit_text"
+                    android:id="@+id/lesson_date_edit_text_teacher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/students_recycler_view"
+                android:id="@+id/students_recycler_view_teacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_margin_16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lesson_date_field" />
+                app:layout_constraintTop_toBottomOf="@id/lesson_date_teacher" />
 
             <Button
-                android:id="@+id/button_send"
+                android:id="@+id/button_send_teacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_margin_16"
                 android:background="@drawable/background_fill_blue_corner_4"
                 android:gravity="center"
-                android:text="@string/send"
+                android:text="@string/send_teacher"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/students_recycler_view" />
+                app:layout_constraintTop_toBottomOf="@id/students_recycler_view_teacher" />
+
+            <Button
+                android:id="@+id/button_do_not_send_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_margin_16"
+                android:background="@drawable/background_fill_blue_corner_4"
+                android:gravity="center"
+                android:text="Не вносить данные"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_send_teacher" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loader"
+        android:id="@+id/loader_students_for_teacher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"

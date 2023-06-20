@@ -6,17 +6,11 @@ import com.example.diplom.data.dataSource.provideSibsutisServices
 import com.example.diplom.data.remote.network.INetwork
 import com.example.diplom.data.remote.network.Network
 import com.example.diplom.data.remote.network.SupportInterceptor
-import com.example.diplom.data.repo.GroupRepository
-import com.example.diplom.data.repo.NewsRepo
-import com.example.diplom.data.repo.ScheduleRepo
-import com.example.diplom.data.repo.UserDbRepository
-import com.example.diplom.data.repo.UserRepository
-import com.example.diplom.domain.repo.IGroupRepo
-import com.example.diplom.domain.repo.INewsRepo
-import com.example.diplom.domain.repo.IScheduleRepo
-import com.example.diplom.domain.repo.IUserDbRepo
-import com.example.diplom.domain.repo.IUserRepo
+import com.example.diplom.data.repo.*
+import com.example.diplom.domain.repo.*
 import com.example.diplom.ui.attendance.AttendanceViewModel
+import com.example.diplom.ui.attendanceTeacher.AttendanceTeacherViewModel
+import com.example.diplom.ui.attendanceTeacher.detailedteacherattendance.DetailedTeacherAttendanceViewModel
 import com.example.diplom.ui.login.LoginViewModel
 import com.example.diplom.ui.news.NewsViewModel
 import com.example.diplom.ui.news.detailednews.DetailedNewsViewModel
@@ -32,6 +26,7 @@ val networkModule = module {
     single { AppDatabase.getDatabase(get()) }
     single { AppDatabase.getDatabase(get()).getUserDao() }
     single { AppDatabase.getDatabase(get()).getGroupDao() }
+    single { AppDatabase.getDatabase(get()).getDisciplinesDao() }
 }
 
 val remoteModule = module {
@@ -39,6 +34,13 @@ val remoteModule = module {
 }
 
 val repositoryModule = module {
+
+    single<IDisciplineRepo> {
+        DisciplinesRepository(
+            source = get(),
+            disciplinesDao = get()
+        )
+    }
 
     single<IGroupRepo> {
         GroupRepository(
@@ -56,7 +58,8 @@ val repositoryModule = module {
         UserRepository(
             source = get(),
             userDbRepository = get(),
-            groupRepository = get()
+            groupRepository = get(),
+            disciplinesDao = get()
         )
     }
 
@@ -72,17 +75,49 @@ val repositoryModule = module {
             database = get()
         )
     }
+
+    single<IHeadGroupListSendRepository> {
+        HeadGroupListSendRepository(
+            get()
+        )
+    }
+
+    single<IGetHeadListRepo> {
+        GetHeadListRepo(
+            get(),
+            get()
+        )
+    }
 }
 
 val viewModelModule = module {
-    viewModel { LoginViewModel(get()) }
+    viewModel {
+        LoginViewModel(
+            userRepository = get(),
+            disciplinesRepository = get()
+        )
+    }
     viewModel { ScheduleViewModel(get()) }
     viewModel { NewsViewModel(get()) }
     viewModel { DetailedNewsViewModel(get()) }
 
     viewModel {
         AttendanceViewModel(
-            groupRepository = get()
+            groupRepository = get(),
+            disciplinesRepository = get(),
+            get()
+        )
+    }
+
+    viewModel {
+        AttendanceTeacherViewModel(
+            get()
+        )
+    }
+
+    viewModel {
+        DetailedTeacherAttendanceViewModel(
+            get()
         )
     }
 }

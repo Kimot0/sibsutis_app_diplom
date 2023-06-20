@@ -1,13 +1,9 @@
 package com.example.diplom.data.dataSource
 
-import com.example.diplom.data.remote.entity.ApiLesson
-import com.example.diplom.data.remote.entity.ApiNews
-import com.example.diplom.data.remote.entity.ApiStudentOfGroup
-import com.example.diplom.data.remote.entity.ApiUser
+import com.example.diplom.data.remote.entity.*
 import com.example.diplom.data.remote.network.INetwork
-import com.example.diplom.domain.entity.ScheduleRequest
-import com.example.diplom.domain.entity.UserAuthRequest
-import com.example.diplom.domain.entity.UsersRequest
+import com.example.diplom.domain.entity.*
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -29,4 +25,16 @@ interface ISibsutisRemoteServices{
 
     @POST("users")
     suspend fun getGroup(@Body group: UsersRequest): Response<List<ApiStudentOfGroup>>
+
+    @POST("teacher")
+    suspend fun getDisciplines(@Body group: ScheduleRequest): Response<List<ApiDiscipline>>
+
+    @POST("sendlist")
+    suspend fun sendGroupList(@Body group: ApiHeadSendList):Response<String>
+
+    @POST("getlist")
+    suspend fun getGroupListForTeacher(@Body teacherFIO: TeacherGetGroupListRequest):Response<List<ApiGetHeadList>>
+
+    @POST("sendteacherlist")
+    suspend fun sendGroupListByTeacher(@Body list: HeadListForTeacher) : Response<String>
 }

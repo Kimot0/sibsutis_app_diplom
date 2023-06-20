@@ -48,11 +48,18 @@ class NavigationActivity : AppCompatActivity() {
     fun setupBottomNavigationBarForTeacher() {
         val bottomBarMenu = binding.bottomNavView.menu
         bottomBarMenu.removeItem(R.id.navigation_schedule)
+        bottomBarMenu.removeItem(R.id.navigation_attendance)
     }
 
     fun setupBottomNavigationBarForStudent() {
         val bottomBarMenu = binding.bottomNavView.menu
         bottomBarMenu.removeItem(R.id.navigation_attendance)
+        bottomBarMenu.removeItem(R.id.navigation_attendance_teacher)
+    }
+
+    fun setupBottomNavigationBarForHead() {
+        val bottomBarMenu = binding.bottomNavView.menu
+        bottomBarMenu.removeItem(R.id.navigation_attendance_teacher)
     }
 
     override fun onSupportNavigateUp(): Boolean {
